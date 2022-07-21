@@ -11,4 +11,4 @@ class UserRequest(BaseModel):
 
 
 class UserResponse(UserRequest):
-    id: UUID
+    id_: UUID
