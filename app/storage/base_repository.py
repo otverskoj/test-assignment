@@ -4,7 +4,7 @@ from uuid import UUID
 from app.models.schemas.schemas import UserRequest, UserResponse
 from app.storage.user_in_memory_repository import UserInMemoryRepository
 from app.storage.user_db_repository import UserDBRepository
-from app.settings import settings
+from app.settings import REPOSITORY_TYPE
 
 
 class UserRepository(Protocol):
@@ -27,4 +27,4 @@ _repositories = {
 }
 
 
-repository = _repositories[settings['repository_type']](settings['repository_config'])
+repository = _repositories[REPOSITORY_TYPE]()

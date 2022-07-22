@@ -1,4 +1,3 @@
-from typing import Protocol
 from uuid import UUID, uuid4
 
 from app.models.schemas.schemas import UserRequest, UserResponse
@@ -6,10 +5,9 @@ from app.errors.user_does_not_exist_error import UserDoesNotExist
 
 
 class UserInMemoryRepository:
-    def __new__(cls, config: dict = None):
+    def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(UserInMemoryRepository, cls).__new__(cls)
-            cls.instance.config = config or {}
             cls.instance.storage: dict[UUID, UserResponse] = dict()
         return cls.instance
 
