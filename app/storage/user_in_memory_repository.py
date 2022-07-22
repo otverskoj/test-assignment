@@ -2,7 +2,7 @@ from typing import Protocol
 from uuid import UUID, uuid4
 
 from app.models.schemas.schemas import UserRequest, UserResponse
-from app.api.errors.user_does_not_exist_error import UserDoesNotExist
+from app.errors.user_does_not_exist_error import UserDoesNotExist
 
 
 class UserInMemoryRepository:
