@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  app:
+    restart: always
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    command: uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+  
+  db:
+    restart: always
+    image: postgres:13
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      retries: 5
+
+volumes:
+  postgres-db-volume:
+    driver: local
