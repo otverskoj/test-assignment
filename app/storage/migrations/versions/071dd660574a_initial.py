@@ -30,19 +30,6 @@ def upgrade() -> None:
         );
         '''
     )
-    # with op.get_bind() as conn:
-    #     conn.execute(
-    #         '''
-    #         CREATE TABLE IF NOT EXISTS users (
-    #             id uuid PRIMARY KEY,
-    #             first_name varchar(100) NOT NULL,
-    #             last_name varchar(100) NOT NULL,
-    #             middle_name varchar(100),
-    #             created_at timestamp DEFAULT (now()),
-    #             updated_at timestamp DEFAULT (now())
-    #         );
-    #         '''
-    #     )
 
 
 def downgrade() -> None:

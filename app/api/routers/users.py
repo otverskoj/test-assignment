@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.models.schemas.schemas import UserRequest, UserResponse
 from app.errors.user_does_not_exist_error import UserDoesNotExist
+from app.errors.db_cant_handle_query_error import DBCantHandleQuery
 from app.services import user_service
 
 
@@ -19,11 +20,22 @@ def get_user_by_id(user_id: UUID) -> UserResponse:
             status_code=404, 
             detail=f'User with id {user_id} does not exist.'
         )
+    except DBCantHandleQuery as err:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"DB can't handle query: {str(err)}"
+        )
 
 
 @router.post('/users/', response_model=UserResponse, status_code=201)
 def create_user(user: UserRequest) -> UserResponse:
-    return user_service.create_user(user)
+    try:
+        return user_service.create_user(user)
+    except DBCantHandleQuery as err:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"DB can't handle query: {str(err)}"
+        )
 
 
 @router.put('/users/{user_id}')
@@ -35,6 +47,11 @@ def update_user(*, user_id: UUID, user: UserRequest) -> UserResponse:
             status_code=404, 
             detail=f'User with id {user_id} does not exist.'
         )
+    except DBCantHandleQuery as err:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"DB can't handle query: {str(err)}"
+        )
 
 
 @router.delete('/users/{user_id}', status_code=204)
@@ -45,4 +62,9 @@ def delete_user(user_id: UUID):
         raise HTTPException(
             status_code=404, 
             detail=f'User with id {user_id} does not exist.'
+        )
+    except DBCantHandleQuery as err:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"DB can't handle query: {str(err)}"
         )

@@ -26,5 +26,4 @@ _repositories = {
     'db': UserDBRepository
 }
 
-
 repository = _repositories[REPOSITORY_TYPE]()
