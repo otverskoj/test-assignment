@@ -1,5 +1,5 @@
 .git
 .dockerignore
-.env
+*.env*
 *Dockerfile*
 *docker-compose*
