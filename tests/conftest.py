@@ -1,10 +1,10 @@
-from uuid import uuid4
-
-from fastapi.testclient import TestClient
 import pytest
+import psycopg2
+from fastapi.testclient import TestClient
 
 from app.main import app
 from app.models.schemas.schemas import UserRequest, UserResponse
+from app.settings import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 
 
 @pytest.fixture
@@ -34,3 +34,23 @@ def user_response_for_test() -> UserResponse:
             'middle_name': 'Ivanovich'
         }
     )
+
+
+@pytest.fixture(scope='module')
+def insert_values_db() -> None:
+    with psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT
+    ) as conn:
+        with conn.cursor() as session:
+            session.execute(
+                """
+                INSERT INTO
+                    users (id, first_name, middle_name, last_name)
+                VALUES
+                    ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa', 'Jayden', 'Sebastian', 'Perez')
+                """
+            )
