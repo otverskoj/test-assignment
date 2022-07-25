@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  test-db:
+    restart: always
+    image: postgres:13
+    environment:
+      POSTGRES_DB: postgres_test_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      retries: 5
+  
+  app:
+    restart: always
+    build: .
+    env_file:
+      - app.test.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - test-db
+    entrypoint: /bin/bash /code/app/entrypoint.sh
