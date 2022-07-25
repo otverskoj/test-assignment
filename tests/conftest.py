@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import pytest
 import psycopg2
 from fastapi.testclient import TestClient
@@ -5,6 +7,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.models.schemas.schemas import UserRequest, UserResponse
 from app.settings import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
+from app.storage.user_in_memory_repository import UserInMemoryRepository
 
 
 @pytest.fixture
@@ -54,3 +57,14 @@ def insert_values_db() -> None:
                     ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa', 'Jayden', 'Sebastian', 'Perez')
                 """
             )
+
+
+@pytest.fixture
+def insert_values_in_memory() -> None:
+    user = UserResponse(
+        id_='aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',
+        first_name='Jayden',
+        middle_name='Sebastian',
+        last_name='Perez'
+    )
+    UserInMemoryRepository().storage = {user.id_: user}
