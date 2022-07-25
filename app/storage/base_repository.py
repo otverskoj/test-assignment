@@ -1,14 +1,11 @@
-from typing import Protocol
+from abc import ABC
 from uuid import UUID
 
 from app.models.schemas.schemas import UserRequest, UserResponse
-from app.storage.user_in_memory_repository import UserInMemoryRepository
-from app.storage.user_db_repository import UserDBRepository
-from app.settings import REPOSITORY_TYPE
 
 
-class UserRepository(Protocol):
-    def create(self, user: UserRequest) -> None:
+class UserRepository(ABC):
+    def create(self, user: UserRequest) -> UserResponse:
         raise NotImplementedError
     
     def get_by_id(self, user_id: UUID) -> UserResponse:
@@ -19,11 +16,3 @@ class UserRepository(Protocol):
     
     def delete(self, user_id: UUID) -> None:
         raise NotImplementedError
-
-
-_repositories = {
-    'in_memory': UserInMemoryRepository,
-    'db': UserDBRepository
-}
-
-repository = _repositories[REPOSITORY_TYPE]()

@@ -8,27 +8,27 @@ from app.models.schemas.schemas import UserRequest, UserResponse
 from app.errors.user_does_not_exist_error import UserDoesNotExist
 from app.errors.db_cant_handle_query_error import DBCantHandleQuery
 from app.settings import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
+from app.storage.base_repository import UserRepository
 
 
-class UserDBRepository:
+class UserDBRepository(UserRepository):
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(UserDBRepository, cls).__new__(cls)
-            cls.instance._connect()
+            cls.instance._connection = cls.instance._connect()
         return cls.instance
 
     def _connect(cls):
         if hasattr(cls.instance, '_connection') and cls.instance._connection:
             return cls.instance._connection
         
-        cls.instance._connection = psycopg2.connect(
+        return psycopg2.connect(
             dbname=DB_NAME,
             user=DB_USER,
             password=DB_PASSWORD,
             host=DB_HOST,
             port=DB_PORT
         )
-        return cls.instance._connection
 
     def close_connection(self) -> None:
         if self._connection:

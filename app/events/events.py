@@ -1,5 +1,5 @@
 from app.settings import REPOSITORY_TYPE
-from app.storage.base_repository import repository
+from app.storage.repositories import repository
 
 
 def shutdown_app() -> None:

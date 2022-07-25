@@ -1,10 +1,10 @@
 from uuid import UUID
 
 from app.models.schemas.schemas import UserRequest, UserResponse
-from app.storage.base_repository import repository
+from app.storage.repositories import repository
 
 
-def create_user(user: UserRequest) -> None:
+def create_user(user: UserRequest) -> UserResponse:
     return repository.create(user)
     
 def get_user_by_id(user_id: UUID) -> UserResponse:
