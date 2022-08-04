@@ -2,10 +2,10 @@ from uuid import UUID, uuid4
 
 from app.models.schemas.schemas import UserRequest, UserResponse
 from app.errors.user_does_not_exist_error import UserDoesNotExist
-from app.storage.base_repository import UserRepository
+from app.storage.repositories.user_repository import IUserRepository
 
 
-class UserInMemoryRepository(UserRepository):
+class UserInMemoryRepository(IUserRepository):
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(UserInMemoryRepository, cls).__new__(cls)
