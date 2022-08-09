@@ -1,13 +1,16 @@
+from typing import Optional, Mapping, Any
+
 from pydantic import BaseSettings
 
 
+
+class RepositorySettings(BaseSettings):
+    type: str
+    settings: Optional[Mapping[str, Any]] = None
+
+
 class ApplicationSettings(BaseSettings):
-    repository_type: str
-    db_name: str
-    db_host: str
-    db_port: str
-    db_user: str
-    db_password: str
+    repository: RepositorySettings
 
     class Config:
         anystr_strip_whitespace = True

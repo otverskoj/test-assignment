@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Mapping, Any
 
 from pydantic import ValidationError
 
@@ -14,7 +14,7 @@ from app.settings.setting_models.app import ApplicationSettings
 class UserPostgresRepositoryFactory(IUserRepositoryFactory):
     def get_user_repository(
         self,
-        settings: Optional[ApplicationSettings] = None
+        settings: Optional[Mapping[str, Any]] = None
     ) -> IUserRepository:
         try:
             repo_settings = UserPostgresRepositorySettings(**settings.dict())
