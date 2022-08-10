@@ -6,6 +6,6 @@ from app.api.dependencies.repositories import get_user_repository
 
 
 def get_user_service(
-        user_repo: IUserRepository = Depends(get_user_repository)
+    user_repo: IUserRepository = Depends(get_user_repository)
 ) -> UserService:
     return UserService(user_repo)

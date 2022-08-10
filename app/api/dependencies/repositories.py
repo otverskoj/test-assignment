@@ -11,9 +11,8 @@ from app.storage.repositories.factory_storage import UserRepositoryFactoryStorag
 def get_user_repository(
     app_settings: Optional[Mapping[str, Any]] = Depends(read_application_settings)
 ) -> IUserRepository:
-    fac = _get_user_repo_factory(app_settings.repository_type)
+    fac = _get_user_repo_factory(app_settings.repository.type)
     return fac.get_user_repository(
-        repo_type=app_settings.repository.type,
         repo_settings=app_settings.repository.settings,
     )
 

@@ -8,7 +8,6 @@ class IUserRepositoryFactory(ABC):
     @abstractmethod
     def get_user_repository(
         self,
-        repo_type: str,
         repo_settings: Optional[Mapping[str, Any]] = None
     ) -> IUserRepository:
         pass

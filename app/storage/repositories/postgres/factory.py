@@ -8,19 +8,18 @@ from app.storage.repositories.postgres.settings_model import UserPostgresReposit
 from app.storage.repositories.postgres.repository import UserPostgresRepository
 from app.storage.repositories.postgres.connection_creator import PostgresConnectionCreator
 from app.errors.cant_validate_repository_settings import CantValidateRepositorySettings
-from app.settings.setting_models.app import ApplicationSettings
 
 
 class UserPostgresRepositoryFactory(IUserRepositoryFactory):
     def get_user_repository(
         self,
-        settings: Optional[Mapping[str, Any]] = None
+        repo_settings: Optional[Mapping[str, Any]] = None
     ) -> IUserRepository:
         try:
-            repo_settings = UserPostgresRepositorySettings(**settings.dict())
+            settings = UserPostgresRepositorySettings(**repo_settings)
         except ValidationError:
             raise CantValidateRepositorySettings
 
-        connection = PostgresConnectionCreator(repo_settings).connection
+        connection = PostgresConnectionCreator(settings).connection
 
         return UserPostgresRepository(connection)
