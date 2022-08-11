@@ -1,0 +1,10 @@
+{
+    "type": "postgres",
+    "settings": {
+        "db_user": "postgres",
+        "db_password": "postgres",
+        "db_name": "postgres",
+        "db_port": "5432",
+        "db_host": "postgres"
+    }
+}
