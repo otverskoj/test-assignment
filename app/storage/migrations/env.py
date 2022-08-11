@@ -6,7 +6,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.settings.settings import read_application_settings
+from app.settings.settings import get_application_settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -14,7 +14,7 @@ config = context.config
 
 
 section = config.config_ini_section
-settings = read_application_settings().repository.settings
+settings = get_application_settings().repository.settings
 config.set_section_option(section, "DB_USER", settings["db_user"])
 config.set_section_option(section, "DB_PASSWORD", settings["db_password"])
 config.set_section_option(section, "DB_NAME", settings["db_name"])
