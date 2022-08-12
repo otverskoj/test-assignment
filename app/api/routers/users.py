@@ -8,7 +8,6 @@ from app.models.schemas.schemas import UserRequest, UserResponse
 from app.errors.user_does_not_exist_error import UserDoesNotExist
 from app.errors.db_cant_handle_query_error import DBCantHandleQuery
 from app.services.user_service import IUserService
-from app.services.user_service_impl import UserServiceImpl
 from app.api.dependencies.services import get_user_service
 
 
