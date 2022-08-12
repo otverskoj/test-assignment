@@ -5,6 +5,11 @@ from app.storage.repositories.user_repository import IUserRepository
 
 
 class IUserRepositoryFactory(ABC):
+    @classmethod
+    @abstractmethod
+    def repo_type(cls) -> str:
+        pass
+
     @abstractmethod
     def get_user_repository(
         self,

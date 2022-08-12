@@ -7,6 +7,12 @@ from app.settings.models.app import ApplicationSettings
 
 
 class UserInMemoryRepositoryFactory(IUserRepositoryFactory):
+    __repo_type = 'in-memory'
+
+    @classmethod
+    def repo_type(cls) -> str:
+        return cls.__repo_type
+
     def get_user_repository(
         self,
         repo_settings: Optional[Mapping[str, Any]] = None

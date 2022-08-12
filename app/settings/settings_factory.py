@@ -9,7 +9,7 @@ __all__ = ['ISettingsFactory']
 class ISettingsFactory(ABC):
     @classmethod
     @abstractmethod
-    def types(cls) -> List[str]:
+    def settings_types(cls) -> List[str]:
         pass
 
     @abstractmethod

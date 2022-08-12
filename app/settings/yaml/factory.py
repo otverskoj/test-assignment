@@ -9,14 +9,14 @@ __all__ = ['YAMLSettingsFactory']
 
 
 class YAMLSettingsFactory(ISettingsFactory):
-    settings_types = [
+    __settings_types = [
         'yaml',
         'yml'
     ]
 
     @classmethod
-    def types(cls) -> List[str]:
-        return cls.settings_types
+    def settings_types(cls) -> List[str]:
+        return cls.__settings_types
 
     def get_parser(self) -> ISettingsParser:
         return YAMLSettingsParser()

@@ -11,6 +11,12 @@ from app.errors.cant_validate_repository_settings import CantValidateRepositoryS
 
 
 class UserPostgresRepositoryFactory(IUserRepositoryFactory):
+    __repo_type = 'postgres'
+
+    @classmethod
+    def repo_type(cls) -> str:
+        return cls.__repo_type
+
     def get_user_repository(
         self,
         repo_settings: Optional[Mapping[str, Any]] = None
