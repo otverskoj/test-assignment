@@ -10,11 +10,11 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-#    network_mode: host
-#    expose:
-#      - 5432
-    ports:
-      - 5432:5432
+    network_mode: host
+    expose:
+      - 5432
+#    ports:
+#      - 5432:5432
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 5s
@@ -25,11 +25,11 @@ services:
     build: .
     environment:
       SETTINGS_PATH: app/settings/example/settings.json
-#    network_mode: host
-#    expose:
-#      - 8000
-    ports:
-      - 8000:8000
+    network_mode: host
+    expose:
+      - 8000
+#    ports:
+#      - 8000:8000
     depends_on:
       - postgres
     entrypoint: /bin/bash /code/app/entrypoint.sh

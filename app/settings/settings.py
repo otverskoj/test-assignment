@@ -2,7 +2,7 @@ import os
 from functools import lru_cache
 from pathlib import Path
 
-from app.settings.factory_storage import SettingsFactoryStorage
+from app.settings.factory_storage_impl import SettingsFactoryStorageImpl
 from app.settings.json.factory import JSONSettingsFactory
 from app.settings.models.app import ApplicationSettings
 from app.settings.yaml.factory import YAMLSettingsFactory
@@ -11,7 +11,7 @@ from app.settings.yaml.factory import YAMLSettingsFactory
 @lru_cache
 def get_application_settings() -> ApplicationSettings:
     settings_path = os.getenv('SETTINGS_PATH')
-    settings_storage = SettingsFactoryStorage()
+    settings_storage = SettingsFactoryStorageImpl()
 
     settings_storage.register(JSONSettingsFactory())
     settings_storage.register(YAMLSettingsFactory())

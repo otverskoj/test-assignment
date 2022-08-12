@@ -1,11 +1,7 @@
-from fastapi import Depends
-
-from app.services.user_service import UserService
-from app.storage.repositories.user_repository import IUserRepository
-from app.api.dependencies.repositories import get_user_repository
+from app.ioc.ioc import ioc
+from app.services.user_service import IUserService
+from app.services.user_service_impl import UserServiceImpl
 
 
-def get_user_service(
-    user_repo: IUserRepository = Depends(get_user_repository)
-) -> UserService:
-    return UserService(user_repo)
+def get_user_service() -> UserServiceImpl:
+    return ioc.get_instance(IUserService)

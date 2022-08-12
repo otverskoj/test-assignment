@@ -7,7 +7,8 @@ from fastapi_utils.inferring_router import InferringRouter
 from app.models.schemas.schemas import UserRequest, UserResponse
 from app.errors.user_does_not_exist_error import UserDoesNotExist
 from app.errors.db_cant_handle_query_error import DBCantHandleQuery
-from app.services.user_service import UserService
+from app.services.user_service import IUserService
+from app.services.user_service_impl import UserServiceImpl
 from app.api.dependencies.services import get_user_service
 
 
@@ -16,7 +17,7 @@ router = InferringRouter()
 
 @cbv(router)
 class UserCBV:
-    user_service: UserService = Depends(get_user_service)
+    user_service: IUserService = Depends(get_user_service)
 
     @router.get('/users/{user_id}', response_model=UserResponse)
     def get_user_by_id(

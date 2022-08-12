@@ -11,15 +11,16 @@ from app.storage.repositories.user_repository import IUserRepository
 
 
 class UserPostgresRepository(IUserRepository):
-    def __new__(cls, connection: psycopg2.extensions.connection):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(UserPostgresRepository, cls).__new__(cls)
-            cls.instance._connection = connection
-        return cls.instance
+    # def __new__(cls, connection: psycopg2.extensions.connection):
+    #     if not hasattr(cls, 'instance'):
+    #         cls.instance = super(UserPostgresRepository, cls).__new__(cls)
+    #         cls.instance._connection = connection
+    #     return cls.instance
 
-    @property
-    def connection(self) -> psycopg2.extensions.connection:
-        return self._connection
+    __slots__ = ('__connection',)
+
+    def __init__(self, connection: psycopg2.extensions.connection) -> None:
+        self.__connection = connection
         
     def create(self, user: UserRequest) -> UserResponse:
         user_response = UserResponse(**user.dict(), id_=uuid4())
@@ -29,8 +30,8 @@ class UserPostgresRepository(IUserRepository):
             user_response.last_name, user_response.middle_name
         )
         try:
-            with self.connection:
-                with self.connection.cursor() as cur:
+            with self.__connection:
+                with self.__connection.cursor() as cur:
                     cur.execute(
                         """
                         INSERT INTO 
@@ -46,8 +47,8 @@ class UserPostgresRepository(IUserRepository):
 
     def get_by_id(self, user_id: UUID) -> UserResponse:
         try:
-            with self.connection:
-                with self.connection.cursor(cursor_factory=DictCursor) as cur:
+            with self.__connection:
+                with self.__connection.cursor(cursor_factory=DictCursor) as cur:
                     cur.execute(
                         """
                         SELECT
@@ -73,8 +74,8 @@ class UserPostgresRepository(IUserRepository):
         )
 
         try:
-            with self.connection:
-                with self.connection.cursor(cursor_factory=DictCursor) as cur:
+            with self.__connection:
+                with self.__connection.cursor(cursor_factory=DictCursor) as cur:
                     cur.execute(
                         """
                         UPDATE 
@@ -94,8 +95,8 @@ class UserPostgresRepository(IUserRepository):
     
     def delete(self, user_id: UUID) -> None:
         try:
-            with self.connection:
-                with self.connection.cursor() as cur:
+            with self.__connection:
+                with self.__connection.cursor() as cur:
                     cur.execute(
                         """
                         DELETE FROM 

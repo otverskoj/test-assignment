@@ -1,45 +1,24 @@
-from typing import Dict, Type
+from abc import ABC, abstractmethod
+from typing import Type
 
 from app.storage.repositories.repository_factory import IUserRepositoryFactory
-from app.errors.factory_not_registered import FactoryNotRegistered
 
 
-class UserRepositoryFactoryStorage:
-    __slots__ = ('__factories',)
-
-    def __new__(cls):
-        if not hasattr(cls, 'instance'):
-            cls.instance = super(UserRepositoryFactoryStorage, cls).__new__(cls)
-        return cls.instance
-
-    def __init__(self) -> None:
-        self.__factories: Dict[str, IUserRepositoryFactory] = {}
-    
-    def get_factory(self, repo_type: str) -> IUserRepositoryFactory:
-        if repo_type in self.__factories:
-            return self.__factories[repo_type]
-        raise FactoryNotRegistered(
-            f'Factory for "{repo_type}" repository is not registered'
-        )
-
+class IUserRepositoryFactoryStorage(ABC):
+    @abstractmethod
     def register(
-        self, 
+        self,
         fac: IUserRepositoryFactory
     ) -> None:
-        repo_type = fac.repo_type()
-        if repo_type not in self.__factories:
-            raise FactoryNotRegistered(
-                f'Factory for "{repo_type}" repository is not registered'
-            )
-        self.__factories[repo_type] = fac
+        pass
 
+    @abstractmethod
     def unregister(
         self,
         fac_class: Type[IUserRepositoryFactory]
     ) -> None:
-        repo_type = fac_class.repo_type()
-        if repo_type not in self.__factories:
-            raise FactoryNotRegistered(
-                f'Factory "{repo_type}" is not registered'
-            )
-        del self.__factories[repo_type]
+        pass
+
+    @abstractmethod
+    def get_factory(self, repo_type: str) -> IUserRepositoryFactory:
+        pass
