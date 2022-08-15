@@ -19,7 +19,7 @@ class Ioc:
             )
         if instance_type in self.__instances:
             raise KeyError(
-                f'Instance of type {instance_type} is already registered'
+                f'Instance of type {instance_type} already registered'
             )
         self.__instances[instance_type] = instance
 

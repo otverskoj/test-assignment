@@ -1,11 +1,11 @@
 import pytest
 from app.errors.user_does_not_exist_error import UserDoesNotExist
-from app.models.schemas.schemas import UserRequest
+from app.user.models.user import User
 from app.storage.user_db_repository import UserDBRepository
 
 
 def test_db_repo_create_and_get() -> None:
-    after_create = UserDBRepository().create(UserRequest(
+    after_create = UserDBRepository().create(User(
         **{
             'first_name': 'Name',
             'last_name': 'Familievich',
@@ -23,7 +23,7 @@ def test_db_repo_update() -> None:
     id_ = 'aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa'
     after_update = UserDBRepository().update(
         id_,
-        UserRequest(
+        User(
             first_name='Test',
             last_name='Testoviy',
             middle_name='Testovich'

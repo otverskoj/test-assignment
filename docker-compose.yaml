@@ -24,7 +24,7 @@ services:
     restart: always
     build: .
     environment:
-      SETTINGS_PATH: app/settings/example/settings.json
+      CONFIG_PATH: app/config/example/config.json
     network_mode: host
     expose:
       - 8000

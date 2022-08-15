@@ -4,11 +4,11 @@ import pytest
 from fastapi.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 
-from app.models.schemas.schemas import UserRequest, UserResponse
+from app.user.models.user import User, UserResponse
 
 
 def test_create_user(
-    user_request_for_test: UserRequest,
+    user_request_for_test: User,
     test_client: TestClient
 ) -> None:
     response = test_client.post(
@@ -32,7 +32,7 @@ def test_create_user(
 
 
 def test_get_existing_user_by_id(
-    user_request_for_test: UserRequest, 
+    user_request_for_test: User,
     test_client: TestClient
 ) -> None:
     post_response = test_client.post(
@@ -59,17 +59,17 @@ def test_get_not_existing_user_by_id(
 @pytest.mark.parametrize(
     'user_to_update',
     (
-        UserRequest(**{
+            User(**{
             'first_name': 'Not Ivan', 
             'last_name': 'Ivanov',
             'middle_name': 'Ivanovich'
         }),
-        UserRequest(**{
+            User(**{
             'first_name': 'Ivan', 
             'last_name': 'Not Ivanov',
             'middle_name': 'Ivanovich'
         }),
-        UserRequest(**{
+            User(**{
             'first_name': 'Ivan', 
             'last_name': 'Ivanov',
             'middle_name': 'Not Ivanovich'
@@ -77,8 +77,8 @@ def test_get_not_existing_user_by_id(
     )
 )
 def test_update_user(
-    user_request_for_test: UserRequest,
-    user_to_update: UserRequest,
+    user_request_for_test: User,
+    user_to_update: User,
     test_client: TestClient
 ) -> None:
     post_response = test_client.post(
@@ -101,7 +101,7 @@ def test_update_user(
 
 
 def test_delete_user(
-    user_request_for_test: UserRequest,
+    user_request_for_test: User,
     test_client: TestClient
 ) -> None:
     post_response = test_client.post(

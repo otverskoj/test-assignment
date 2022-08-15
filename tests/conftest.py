@@ -1,11 +1,9 @@
-from uuid import UUID
-
 import pytest
 import psycopg2
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.models.schemas.schemas import UserRequest, UserResponse
+from app.user.models.user import User, UserResponse
 from app.settings import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from app.storage.user_in_memory_repository import UserInMemoryRepository
 
@@ -17,14 +15,14 @@ def test_client() -> TestClient:
 
 
 @pytest.fixture
-def user_request_for_test() -> UserRequest:
-    return UserRequest(**
+def user_request_for_test() -> User:
+    return User(**
         {
             'first_name': 'Ivan', 
             'last_name': 'Ivanov',
             'middle_name': 'Ivanovich'
         }
-    )
+                )
 
 
 @pytest.fixture
