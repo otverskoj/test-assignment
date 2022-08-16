@@ -2,10 +2,10 @@ from typing import Mapping, Any
 
 from fastapi import FastAPI
 
-from app.plugin import IPlugin
+from app.mixin.plugin import IPlugin
 from .events.start_app import create_start_app_handler
 from .events.stop_app import create_stop_app_handler
-from ..ioc.ioc import ioc
+from app.infrastructure.ioc.impl.ioc_impl import ioc
 from .routers import users
 
 

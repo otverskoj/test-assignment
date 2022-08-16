@@ -6,9 +6,9 @@ from fastapi_utils.inferring_router import InferringRouter
 
 from app.user.models.user import User
 from app.user.models.user_in_db import UserInDB
-# from app.errors.user_does_not_exist_error import UserDoesNotExist
-# from app.errors.db_cant_handle_query_error import DBCantHandleQuery
-from app.user.service.user_service import IUserService
+# from app._errors.user_does_not_exist_error import UserDoesNotExist
+# from app._errors.db_cant_handle_query_error import DBCantHandleQuery
+from app.user.service.core.user_service import IUserService
 from app.web.dependencies.services import get_user_service
 
 
