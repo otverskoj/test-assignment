@@ -1,12 +1,12 @@
+import sys
+
 import click
 import uvicorn
 from fastapi import FastAPI
 
-from app.infrastructure.ioc.impl.ioc_impl import ioc
+from app.infrastructure.config.config import get_application_config
 from app.postgres.plugin import PostgresPlugin
 from app.user.plugin import UserPlugin
-from app.web.plugin import WebPlugin
-from app.infrastructure.config.config import get_application_config
 
 
 @click.command()
@@ -15,7 +15,13 @@ from app.infrastructure.config.config import get_application_config
     default='/home/oleg/Iqtek/technical-test/configs/application_config.yml',
     help='Path to the config file'
 )
-def main(config_path: str) -> None:
+def cli(config_path: str) -> None:
+    run(config_path)
+
+
+def run(config_path: str) -> None:
+    app = FastAPI()
+
     config = get_application_config(config_path)
 
     postgres_plugin = PostgresPlugin()
@@ -24,13 +30,8 @@ def main(config_path: str) -> None:
     user_plugin = UserPlugin()
     user_plugin.initialize(config.dict())
 
-    web_plugin = WebPlugin()
-    web_plugin.initialize(config.dict())
-
-    app = ioc.get_instance(FastAPI)
-
-    uvicorn.run('main:main', host='0.0.0.0', port=8000)
+    uvicorn.run(app, host='0.0.0.0', port=8000)
 
 
 if __name__ == '__main__':
-    main()
+    cli()

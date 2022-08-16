@@ -1,18 +1,13 @@
-from typing import Callable
-
-# from app.ioc.ioc import ioc
-# from app.user.service import IUserService
-# from app.user.service.user_service_impl import UserServiceImpl
-# from app.config.models import ApplicationSettings
-# from app.user.repositories.factory_storage import IUserRepositoryFactoryStorage
-# from app.user.repositories.factory_storage_impl import UserRepositoryFactoryStorageImpl
-# from app.user.repositories.in_memory import UserInMemoryRepositoryFactory
-# from app.user.repositories.postgres.factory import UserPostgresRepositoryFactory
-# from app.user.repositories.user_repository import IUserRepository
+from app.infrastructure.config.config import get_application_config
+from app.postgres.plugin import PostgresPlugin
+from app.user.plugin import UserPlugin
 
 
-def create_start_app_handler() -> Callable:
-    def start_app() -> None:
-        pass
+def handle_startup(config_path: str) -> None:
+    config = get_application_config(config_path)
 
-    return start_app
+    postgres_plugin = PostgresPlugin()
+    postgres_plugin.initialize(config.dict())
+
+    user_plugin = UserPlugin()
+    user_plugin.initialize(config.dict())

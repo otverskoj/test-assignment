@@ -1,6 +1,6 @@
 from uuid import UUID
 import pytest
-from app.errors.user_does_not_exist_error import UserDoesNotExist
+from app._errors.user_does_not_exist_error import UserDoesNotExist
 from app.user.models.user import User
 from app.storage.user_in_memory_repository import UserInMemoryRepository
 

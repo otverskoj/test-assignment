@@ -1,12 +1,12 @@
 from uuid import uuid4
 
 import pytest
-from app.errors.user_does_not_exist_error import UserDoesNotExist
+from app._errors.user_does_not_exist_error import UserDoesNotExist
 from app.user.models.user import User, UserResponse
-from app.user.service.user_service_impl import (
+from app.user.service.impl.user_service_impl import (
     create_user, get_user_by_id, update_user, delete_user
 )
-from app.user.service.user_service_impl import repository
+from app.user.service.impl.user_service_impl import repository
 
 
 def test_create_user(

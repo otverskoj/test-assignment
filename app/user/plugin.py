@@ -1,13 +1,13 @@
 from typing import Mapping, Any
 
-from app.plugin import IPlugin
-from app.user.repositories.factory_storage_impl import UserRepositoryFactoryStorageImpl
-from app.user.repositories.in_memory.factory import UserInMemoryRepositoryFactory
-from app.user.repositories.postgres.factory import UserPostgresRepositoryFactory
-from app.user.service.user_service import IUserService
-from app.user.service.user_service_impl import UserServiceImpl
-from app.ioc.ioc import ioc
-from app.postgres.connection_creator import PostgresConnection
+from app.mixin.plugin import IPlugin
+from app.user.repositories.impl.factory_storage_impl import UserRepositoryFactoryStorageImpl
+from app.user.repositories.impl.in_memory.factory import UserInMemoryRepositoryFactory
+from app.user.repositories.impl.postgres.factory import UserPostgresRepositoryFactory
+from app.user.service.core.user_service import IUserService
+from app.user.service.impl.user_service_impl import UserServiceImpl
+from app.infrastructure.ioc.impl.ioc_impl import ioc
+from app.postgres.impl.connection_creator_impl import PostgresConnection
 
 
 class UserPlugin(IPlugin):
