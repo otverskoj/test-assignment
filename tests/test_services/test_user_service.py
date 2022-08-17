@@ -19,7 +19,7 @@ def test_create_user(
     }
     mock_repo = mocker.Mock(repository, **attrs)
     
-    mocker.patch('app.service.user_service.repository', mock_repo)
+    mocker.patch('src.service.user_service.repository', mock_repo)
     service_response = create_user(user_request_for_test)
 
     mock_repo.create.assert_called_once_with(user_request_for_test)
@@ -35,7 +35,7 @@ def test_get_user_by_id(
     }
     mock_repo = mocker.Mock(repository, **attrs)
     
-    mocker.patch('app.service.user_service.repository', mock_repo)
+    mocker.patch('src.service.user_service.repository', mock_repo)
     service_response = get_user_by_id(user_response_for_test.id_)
 
     mock_repo.get_by_id.assert_called_once_with(user_response_for_test.id_)
@@ -50,7 +50,7 @@ def test_get_user_by_id_raises_exception(
     }
     mock_repo = mocker.Mock(repository, **attrs)
     
-    mocker.patch('app.service.user_service.repository', mock_repo)
+    mocker.patch('src.service.user_service.repository', mock_repo)
     fake_id = uuid4()
     with pytest.raises(UserDoesNotExist):
         get_user_by_id(fake_id)
@@ -66,7 +66,7 @@ def test_update_user(
     }
     mock_repo = mocker.Mock(repository, **attrs)
     
-    mocker.patch('app.service.user_service.repository', mock_repo)
+    mocker.patch('src.service.user_service.repository', mock_repo)
     service_response = update_user(
         user_response_for_test.id_,    
         user_request_for_test
@@ -88,7 +88,7 @@ def test_delete_user(
     }
     mock_repo = mocker.Mock(repository, **attrs)
     
-    mocker.patch('app.service.user_service.repository', mock_repo)
+    mocker.patch('src.service.user_service.repository', mock_repo)
     delete_user(user_response_for_test.id_)
 
     mock_repo.delete.assert_called_once_with(user_response_for_test.id_)

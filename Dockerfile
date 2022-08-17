@@ -12,5 +12,5 @@ EXPOSE 8000
 
 RUN ["chmod", "+x", "/code/app/wait-for-it.sh"]
 
-# ENTRYPOINT ["/bin/bash", "/code/app/entrypoint.sh"]
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# ENTRYPOINT ["/bin/bash", "/code/src/entrypoint.sh"]
+# CMD ["uvicorn", "src.main:src", "--host", "0.0.0.0", "--port", "8000"]
