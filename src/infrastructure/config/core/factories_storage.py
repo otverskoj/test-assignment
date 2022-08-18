@@ -4,7 +4,7 @@ from typing import Type
 from src.infrastructure.config.core.config_factory import IConfigFactory
 
 
-class IConfigFactoryStorage(ABC):
+class IConfigFactoriesStorage(ABC):
     @abstractmethod
     def register(self, fac: IConfigFactory) -> None:
         pass

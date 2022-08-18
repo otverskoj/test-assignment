@@ -1,10 +1,10 @@
 from typing import Any, Dict, Type
 
 from src.infrastructure.config.core.config_factory import IConfigFactory
-from src.infrastructure.config.core.factory_storage import IConfigFactoryStorage
+from src.infrastructure.config.core.factories_storage import IConfigFactoriesStorage
 
 
-class ConfigFactoryStorageImpl(IConfigFactoryStorage):
+class ConfigFactoriesStorageImpl(IConfigFactoriesStorage):
     __slots__ = ('__instances',)
 
     def __init__(self) -> None:

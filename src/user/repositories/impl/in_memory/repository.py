@@ -1,9 +1,10 @@
 from typing import Dict
 from uuid import UUID, uuid4
 
-from app.user.models.user import User
-from app.user.models.user_in_db import UserInDB
-from app.user.repositories.core.user_repository import IUserRepository
+from src.user.models.user import User
+from src.user.models.user_in_db import UserInDB
+from src.user.repositories.core.exceptions import UserDoesNotExist
+from src.user.repositories.core.user_repository import IUserRepository
 
 
 class UserInMemoryRepository(IUserRepository):
@@ -21,7 +22,7 @@ class UserInMemoryRepository(IUserRepository):
         return self._get_user(user_id)
         
     def update(self, user_id: UUID, user: User) -> UserInDB:
-        new_user_data = self._get_user(user_id).dict() | user.dict()
+        new_user_data = {**self._get_user(user_id).dict(), **user.dict()}
         self.__storage[user_id] = UserInDB(**new_user_data)
         return self.__storage[user_id]
     
@@ -31,5 +32,5 @@ class UserInMemoryRepository(IUserRepository):
 
     def _get_user(self, user_id: UUID) -> UserInDB:
         if user_id not in self.__storage:
-            raise KeyError('User does not exist')
+            raise UserDoesNotExist()
         return self.__storage[user_id]

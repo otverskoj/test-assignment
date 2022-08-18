@@ -1,10 +1,10 @@
 from typing import Dict, Type
 
-from app.user.repositories.core.factory_storage import IUserRepositoryFactoryStorage
-from app.user.repositories.core.repository_factory import IUserRepositoryFactory
+from src.user.repositories.core.factories_storage import IUserRepositoryFactoriesStorage
+from src.user.repositories.core.repository_factory import IUserRepositoryFactory
 
 
-class UserRepositoryFactoryStorageImpl(IUserRepositoryFactoryStorage):
+class UserRepositoryFactoriesStorageImpl(IUserRepositoryFactoriesStorage):
     __slots__ = ('__factories',)
 
     def __init__(self) -> None:

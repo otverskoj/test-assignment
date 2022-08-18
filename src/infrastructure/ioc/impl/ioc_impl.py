@@ -20,10 +20,6 @@ class IocImpl(IIoc):
             raise TypeError(
                 f"The specified instance {instance} is not a subtype of the {instance_type}."
             )
-        if instance_type in self.__instances:
-            raise KeyError(
-                f'Instance of type {instance_type} already registered'
-            )
         self.__instances[instance_type] = instance
 
     def get_instance(self, instance_type: Type[T]) -> T:

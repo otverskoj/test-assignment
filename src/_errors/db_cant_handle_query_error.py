@@ -1,2 +1,0 @@
-class DBCantHandleQuery(Exception):
-    pass

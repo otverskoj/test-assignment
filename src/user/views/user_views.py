@@ -1,8 +1,8 @@
 from uuid import UUID
 
-from src.user.models.user import User
-from src.user.models.user_in_db import UserInDB
 from src.user.service.core.user_service import IUserService
+from src.user.views.models.request import UserRequest
+from src.user.views.models.response import UserResponse
 
 
 class UserViews:
@@ -14,21 +14,24 @@ class UserViews:
     def get_user_by_id(
         self,
         user_id: UUID
-    ) -> UserInDB:
-        return self.__service.get_user_by_id(user_id)
+    ) -> UserResponse:
+        user_in_db = self.__service.get_user_by_id(user_id)
+        return UserResponse(**user_in_db.dict())
 
     def create_user(
         self,
-        user: User
-    ) -> UserInDB:
-        return self.__service.create_user(user)
+        user: UserRequest
+    ) -> UserResponse:
+        user_in_db = self.__service.create_user(user)
+        return UserResponse(**user_in_db.dict())
 
     def update_user(
         self,
         user_id: UUID,
-        user: User,
-    ) -> UserInDB:
-        return self.__service.update_user(user_id, user)
+        user: UserRequest,
+    ) -> UserResponse:
+        user_in_db = self.__service.update_user(user_id, user)
+        return UserResponse(**user_in_db.dict())
 
     def delete_user(
         self,

@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from app.user.models.user import User
-from app.user.models.user_in_db import UserInDB
+from src.user.models.user import User
+from src.user.models.user_in_db import UserInDB
 
 
 class IUserRepository(ABC):

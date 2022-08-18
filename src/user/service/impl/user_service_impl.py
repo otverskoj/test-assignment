@@ -1,9 +1,9 @@
 from uuid import UUID
 
-from app.user.models.user import User
-from app.user.models.user_in_db import UserInDB
-from app.user.service.core.user_service import IUserService
-from app.user.repositories.core.user_repository import IUserRepository
+from src.user.models.user import User
+from src.user.models.user_in_db import UserInDB
+from src.user.repositories.core.user_repository import IUserRepository
+from src.user.service.core.user_service import IUserService
 
 
 class UserServiceImpl(IUserService):

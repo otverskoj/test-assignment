@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABC
 from typing import List
+
 from src.infrastructure.config.core.config_parser import IConfigParser
 
 

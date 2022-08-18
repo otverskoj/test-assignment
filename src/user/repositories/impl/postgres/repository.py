@@ -4,12 +4,11 @@ from uuid import UUID, uuid4
 import psycopg2
 from psycopg2.extras import DictCursor
 
-from app.user.models.user import User
-from app.user.models.user_in_db import UserInDB
-from app._errors.user_does_not_exist_error import UserDoesNotExist
-from app._errors.db_cant_handle_query_error import DBCantHandleQuery
-from app.user.repositories.core.user_repository import IUserRepository
-from app.postgres.impl.connection_creator_impl import PostgresConnection
+from src.postgres_connection_creator.core.connection_creator import PostgresConnection
+from src.user.models.user import User
+from src.user.models.user_in_db import UserInDB
+from src.user.repositories.core.exceptions import DBCantHandleQuery, UserDoesNotExist
+from src.user.repositories.core.user_repository import IUserRepository
 
 
 class UserPostgresRepository(IUserRepository):
@@ -57,7 +56,7 @@ class UserPostgresRepository(IUserRepository):
                         (str(user_id),)
                     )
                     if cur.rowcount == 0:
-                        raise UserDoesNotExist
+                        raise UserDoesNotExist()
                     user = cur.fetchone()
         except psycopg2.Error as err:
             raise DBCantHandleQuery(str(err))

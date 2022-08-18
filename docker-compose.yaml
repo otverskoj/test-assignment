@@ -5,11 +5,11 @@ services:
     restart: always
     image: postgres:13
     environment:
-      POSTGRES_DB: postgres_connection_creator
-      POSTGRES_USER: postgres_connection_creator
-      POSTGRES_PASSWORD: postgres_connection_creator
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - ./postgres_connection_creator-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
     network_mode: host
     expose:
       - 5432
@@ -23,8 +23,6 @@ services:
   app:
     restart: always
     build: .
-    environment:
-      CONFIG_PATH: src/config/example/config.json
     network_mode: host
     expose:
       - 8000

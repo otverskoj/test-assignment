@@ -1,5 +1,5 @@
 from src.infrastructure.ioc.impl.ioc_impl import ioc
-from src.infrastructure.plugin_core.plugin import IPlugin
+from src.infrastructure.plugin.core.plugin import IPlugin
 from src.postgres_connection_creator.core.connection_creator import PostgresConnection
 from src.postgres_connection_creator.impl.config import PostgresConnectionCreatorConfig
 from src.postgres_connection_creator.impl.connection_creator_impl import PostgresConnectionCreatorImpl
@@ -20,5 +20,5 @@ class PostgresConnectionCreatorPlugin(IPlugin):
 
     def deinitialize(self) -> None:
         conn = ioc.get_instance(PostgresConnection)
-        if not conn.closed():
+        if not conn.closed:
             conn.close()

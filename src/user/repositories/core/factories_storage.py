@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
-from app.user.repositories.core.repository_factory import IUserRepositoryFactory
+from src.user.repositories.core.repository_factory import IUserRepositoryFactory
 
 
-class IUserRepositoryFactoryStorage(ABC):
+class IUserRepositoryFactoriesStorage(ABC):
     @abstractmethod
     def register(
         self,

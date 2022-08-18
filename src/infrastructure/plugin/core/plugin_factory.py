@@ -1,10 +1,15 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Mapping, Any
 
-from src.infrastructure.plugin_core.plugin import IPlugin
+from src.infrastructure.plugin.core.plugin import IPlugin
 
 
-class PluginFactory(ABC):
+class IPluginFactory(ABC):
+    @classmethod
+    @abstractmethod
+    def type(cls):
+        pass
+
     @abstractmethod
     def get_plugin(
         self,

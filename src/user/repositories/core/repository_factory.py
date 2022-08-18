@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Any, Mapping
 
-from app.user.repositories.core.user_repository import IUserRepository
-from app.postgres.impl.connection_creator_impl import PostgresConnection
+from src.postgres_connection_creator.core.connection_creator import PostgresConnection
+from src.user.repositories.core.user_repository import IUserRepository
 
 
 class IUserRepositoryFactory(ABC):
@@ -14,6 +14,6 @@ class IUserRepositoryFactory(ABC):
     @abstractmethod
     def get_user_repository(
         self,
-        connection: Optional[PostgresConnection] = None
+        repo_settings: Optional[Mapping[str, Any]] = None
     ) -> IUserRepository:
         pass
