@@ -1,0 +1,16 @@
+plugins:
+  - name: db_connection_creator
+    settings:
+      type: none  # |postgres
+      settings:
+        db_user: postgres
+        db_password: postgres
+        db_name: postgres
+        db_port: 5432
+        db_host: 127.0.0.1
+
+  - name: user
+    settings:
+      repository:
+        type: in_memory  # |db_connection_creator|es
+        settings:

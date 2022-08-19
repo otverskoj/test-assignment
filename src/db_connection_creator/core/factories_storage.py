@@ -1,24 +1,25 @@
 from abc import ABC, abstractmethod
 from typing import Type
 
+from src.db_connection_creator.core.factory import IDBConnectionCreatorFactory
 from src.user.repositories.core.repository_factory import IUserRepositoryFactory
 
 
-class IUserRepositoryFactoriesStorage(ABC):
+class IDBConnectionCreatorFactoriesStorage(ABC):
     @abstractmethod
     def register(
         self,
-        fac_class: Type[IUserRepositoryFactory]
+        fac: IDBConnectionCreatorFactory
     ) -> None:
         pass
 
     @abstractmethod
     def unregister(
         self,
-        fac_class: Type[IUserRepositoryFactory]
+        fac_class: Type[IDBConnectionCreatorFactory]
     ) -> None:
         pass
 
     @abstractmethod
-    def get_factory(self, repo_type: str) -> Type[IUserRepositoryFactory]:
+    def get_factory(self, fac_type: str) -> IDBConnectionCreatorFactory:
         pass

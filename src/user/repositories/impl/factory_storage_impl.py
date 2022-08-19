@@ -8,9 +8,9 @@ class UserRepositoryFactoriesStorageImpl(IUserRepositoryFactoriesStorage):
     __slots__ = ('__factories',)
 
     def __init__(self) -> None:
-        self.__factories: Dict[str, IUserRepositoryFactory] = {}
+        self.__factories: Dict[str, Type[IUserRepositoryFactory]] = {}
     
-    def get_factory(self, repo_type: str) -> IUserRepositoryFactory:
+    def get_factory(self, repo_type: str) -> Type[IUserRepositoryFactory]:
         if repo_type in self.__factories:
             return self.__factories[repo_type]
         raise KeyError(
@@ -19,14 +19,14 @@ class UserRepositoryFactoriesStorageImpl(IUserRepositoryFactoriesStorage):
 
     def register(
         self, 
-        fac: IUserRepositoryFactory
+        fac_class: Type[IUserRepositoryFactory]
     ) -> None:
-        repo_type = fac.repo_type()
+        repo_type = fac_class.repo_type()
         if repo_type in self.__factories:
             raise KeyError(
                 f'Factory for "{repo_type}" repository is already registered'
             )
-        self.__factories[repo_type] = fac
+        self.__factories[repo_type] = fac_class
 
     def unregister(
         self,

@@ -13,7 +13,7 @@ config = context.config
 
 
 section = config.config_ini_section
-settings = get_application_config().repository.config
+settings = {}
 config.set_section_option(section, "DB_USER", settings["db_user"])
 config.set_section_option(section, "DB_PASSWORD", settings["db_password"])
 config.set_section_option(section, "DB_NAME", settings["db_name"])

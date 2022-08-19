@@ -3,5 +3,10 @@ from typing import Any, Mapping
 from pydantic import BaseModel
 
 
+class ServicesConfig(BaseModel):
+    user: Mapping[str, Any]
+
+
 class ApplicationConfig(BaseModel):
-    plugins: Mapping[str, Any]
+    db_connection: Mapping[str, Any]
+    services: ServicesConfig

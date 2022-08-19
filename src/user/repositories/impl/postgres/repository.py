@@ -4,7 +4,7 @@ from uuid import UUID, uuid4
 import psycopg2
 from psycopg2.extras import DictCursor
 
-from src.postgres_connection_creator.core.connection_creator import PostgresConnection
+from src.db_connection_creator.impl.types.postgres_connection_creator.connection_creator_impl import PostgresConnection
 from src.user.models.user import User
 from src.user.models.user_in_db import UserInDB
 from src.user.repositories.core.exceptions import DBCantHandleQuery, UserDoesNotExist

@@ -1,13 +1,17 @@
 import psycopg2
 
-from src.postgres_connection_creator.impl.config import PostgresConnectionCreatorConfig
-from src.postgres_connection_creator.core.connection_creator import (
-    IPostgresConnectionCreator,
-    PostgresConnection
-)
+from src.db_connection_creator.core.connection_creator import IDBConnectionCreator
+from src.db_connection_creator.impl.types.postgres_connection_creator.config import PostgresConnectionCreatorConfig
 
 
-class PostgresConnectionCreatorImpl(IPostgresConnectionCreator):
+PostgresConnection = psycopg2.extensions.connection
+
+
+class PostgresConnectionCreatorImpl(IDBConnectionCreator):
+    @classmethod
+    def type(cls):
+        pass
+
     __slots__ = ('__config',)
 
     def __init__(self, config: PostgresConnectionCreatorConfig) -> None:

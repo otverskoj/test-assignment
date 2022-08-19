@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Any, Mapping
 
-from src.postgres_connection_creator.core.connection_creator import PostgresConnection
 from src.user.repositories.core.user_repository import IUserRepository
 
 
