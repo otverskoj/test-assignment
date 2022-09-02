@@ -6,14 +6,12 @@ from src.user.repositories.impl.in_memory.repository import UserInMemoryReposito
 
 
 class UserInMemoryRepositoryFactory(IUserRepositoryFactory):
-    __repo_type = 'in-memory'
-
     @classmethod
     def repo_type(cls) -> str:
-        return cls.__repo_type
+        return 'in-memory'
 
     def get_user_repository(
         self,
-        repo_settings: Optional[Mapping[str, Any]] = None
+        repo_settings: Mapping[str, Any]
     ) -> IUserRepository:
         return UserInMemoryRepository()

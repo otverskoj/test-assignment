@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  postgres:
+  postgres_db:
     restart: always
     image: postgres:13
     environment:
@@ -14,9 +14,9 @@ services:
     expose:
       - 5432
 #    ports:
-#      - 5432:5432
+#      - "5432:5432"
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres_connection_creator" ]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 5s
       retries: 5
   
@@ -29,7 +29,7 @@ services:
 #    ports:
 #      - 8000:8000
     depends_on:
-      - postgres
+      - postgres_db
     entrypoint: /bin/bash /code/src/entrypoint.sh
 
 volumes:

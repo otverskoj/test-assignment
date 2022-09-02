@@ -1,9 +1,7 @@
-from typing import Sequence, Mapping, Dict, Type, List
+from typing import List
 
-from src.db_connection_creator.plugin.plugin_factory_impl import DBConnectionCreatorPluginFactory
 from src.infrastructure.config.impl.application_config import ApplicationConfig
 from src.infrastructure.plugin.core.plugin import IPlugin
-from src.infrastructure.plugin.core.plugin_factory import IPluginFactory
 from src.launcher.core.launcher import ILauncher
 from src.user.plugin.plugin_factory import UserPluginFactory
 
@@ -20,10 +18,6 @@ class Launcher(ILauncher):
         self.__plugins: List[IPlugin] = []
 
     def handle_startup(self) -> None:
-        db_plugin_fac = DBConnectionCreatorPluginFactory()
-        db_plugin = db_plugin_fac.get_plugin(self.__config.db_connection)
-        self.__plugins.append(db_plugin)
-
         user_plugin_fac = UserPluginFactory()
         user_plugin = user_plugin_fac.get_plugin(self.__config.services.user)
         self.__plugins.append(user_plugin)

@@ -5,6 +5,11 @@ from src.user.views.models.request import UserRequest
 from src.user.views.models.response import UserResponse
 
 
+__all__ = [
+    'UserViews'
+]
+
+
 class UserViews:
     __slots__ = ('__service',)
 

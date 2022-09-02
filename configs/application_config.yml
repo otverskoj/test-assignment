@@ -1,18 +1,10 @@
-db_connection:
-  type: none  # none postgres
-  settings:
-    db_user: postgres
-    db_password: postgres
-    db_name: postgres
-    db_port: 5432
-    db_host: 127.0.0.1
-
 services:
   user:
-#    settings:
-#      repository:
-#        type: in_memory  # in_memory db_connection_creator postgres
-#        settings:
+    repo_type: postgres  # in-memory postgres
     repository:
-      type: in_memory  # in_memory db_connection_creator postgres
       settings:
+        user: postgres
+        password: postgres
+        name: postgres
+        port: 5432
+        host: 127.0.0.1

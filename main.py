@@ -1,7 +1,7 @@
 import click
 import uvicorn
 
-from src.app import get_app
+from src.entrypoints.fastapi import entrypoint
 
 
 @click.command()
@@ -11,7 +11,7 @@ from src.app import get_app
     help='Path to the config file'
 )
 def main(config_path: str) -> None:
-    app = get_app(config_path)
+    app = entrypoint.get_app(config_path)
     uvicorn.run(app, port=8000, host='0.0.0.0')
 
 

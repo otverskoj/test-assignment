@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 
-from src.db_connection_creator.core.factory import IDBConnectionCreatorFactory
 from src.infrastructure.ioc.impl.ioc_impl import ioc
 from src.infrastructure.plugin.core.plugin import IPlugin
 from src.user.plugin.config import UserPluginConfig
@@ -25,11 +24,9 @@ class UserPlugin(IPlugin):
         storage.register(UserInMemoryRepositoryFactory)
         storage.register(UserPostgresRepositoryFactory)
 
-        db_conn_creator_fac = ioc.get_instance(IDBConnectionCreatorFactory)
-        fac = storage.get_factory(self.__config.repository.type)
+        fac = storage.get_factory(repo_type=self.__config.repo_type)()
 
-        # conn = ioc.get_instance(PostgresConnection)
-        repo = fac.get_user_repository(self.__config.repository.settings)
+        repo = fac.get_user_repository(repo_settings=self.__config.repository)
 
         # service startup
         service = UserServiceImpl(repo)

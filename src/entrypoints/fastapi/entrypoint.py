@@ -6,6 +6,11 @@ from src.launcher.core.launcher import ILauncher
 from src.launcher.impl.launcher_impl import Launcher
 
 
+__all__ = [
+    'get_app'
+]
+
+
 def get_app(settings_path: str) -> FastAPI:
     app = FastAPI()
 

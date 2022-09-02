@@ -4,11 +4,11 @@ from uuid import UUID, uuid4
 import psycopg2
 from psycopg2.extras import DictCursor
 
-from src.db_connection_creator.impl.types.postgres_connection_creator.connection_creator_impl import PostgresConnection
 from src.user.models.user import User
 from src.user.models.user_in_db import UserInDB
 from src.user.repositories.core.exceptions import DBCantHandleQuery, UserDoesNotExist
 from src.user.repositories.core.user_repository import IUserRepository
+from src.user.repositories.impl.postgres.connection.creator import PostgresConnection
 
 
 class UserPostgresRepository(IUserRepository):
@@ -85,7 +85,8 @@ class UserPostgresRepository(IUserRepository):
         except psycopg2.Error as err:
             raise DBCantHandleQuery(str(err))
             
-        new_user_data = user.dict() | {'id_': user_id}
+        new_user_data = user.dict()
+        new_user_data.update({'id_': user_id})
         return UserInDB(**new_user_data)
     
     def delete(self, user_id: UUID) -> None:

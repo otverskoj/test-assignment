@@ -8,5 +8,4 @@ class ServicesConfig(BaseModel):
 
 
 class ApplicationConfig(BaseModel):
-    db_connection: Mapping[str, Any]
     services: ServicesConfig
