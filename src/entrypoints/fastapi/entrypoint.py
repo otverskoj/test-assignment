@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 from src.infrastructure.config.config import get_application_config
 from src.infrastructure.ioc.impl.ioc_impl import ioc
@@ -32,5 +34,15 @@ def get_app(settings_path: str) -> FastAPI:
 
     app.add_event_handler("startup", handle_startup)
     app.add_event_handler("shutdown", handle_shutdown)
+
+    def exception_handler(request: Request, exc: Exception) -> JSONResponse:
+        return JSONResponse(
+            status_code=404,
+            content={
+                "message": f"{exc}"
+            }
+        )
+
+    app.add_exception_handler(Exception, exception_handler)
 
     return app
