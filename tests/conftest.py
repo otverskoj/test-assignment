@@ -1,8 +1,11 @@
 import json
+from uuid import UUID
 
 import pytest
 import requests
 
+from src.user.models.user_in_db import UserInDB
+from src.user.repositories.impl.in_memory.repository import UserInMemoryRepository
 from src.user.views.models.request import UserRequest
 
 
@@ -36,6 +39,26 @@ def id_of_fake_user(fake_user: UserRequest) -> str:
 @pytest.fixture
 def api_localhost_url() -> str:
     return "http://127.0.0.1:8000/users/"
+
+
+@pytest.fixture
+def fake_in_memory_user_id() -> UUID:
+    return UUID('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa')
+
+
+@pytest.fixture
+def not_empty_in_memory_repo(
+    fake_in_memory_user_id: UUID
+) -> UserInMemoryRepository:
+    user = UserInDB(
+        id_=fake_in_memory_user_id,
+        first_name='Jayden',
+        middle_name='Sebastian',
+        last_name='Perez'
+    )
+    repo = UserInMemoryRepository()
+    repo._UserInMemoryRepository__storage.update({user.id_: user})
+    return repo
 
 
 # import pytest
@@ -95,14 +118,3 @@ def api_localhost_url() -> str:
 #                     ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa', 'Jayden', 'Sebastian', 'Perez')
 #                 """
 #             )
-#
-#
-# @pytest.fixture
-# def insert_values_in_memory() -> None:
-#     user = UserResponse(
-#         id_='aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',
-#         first_name='Jayden',
-#         middle_name='Sebastian',
-#         last_name='Perez'
-#     )
-#     UserInMemoryRepository().storage = {user.id_: user}

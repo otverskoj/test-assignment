@@ -14,23 +14,28 @@ class UserInMemoryRepository(IUserRepository):
         self.__storage: Dict[UUID, UserInDB] = {}
 
     def create(self, user: User) -> UserInDB:
-        user_response = UserInDB(**user.dict(), id_=uuid4())
+        unique_id = self.__create_unique_id()
+        user_response = UserInDB(**user.dict(), id_=unique_id)
         self.__storage[user_response.id_] = user_response
         return self.__storage[user_response.id_]
 
     def get_by_id(self, user_id: UUID) -> UserInDB:
-        return self._get_user(user_id)
+        return self.__get_user(user_id)
         
     def update(self, user_id: UUID, user: User) -> UserInDB:
-        new_user_data = {**self._get_user(user_id).dict(), **user.dict()}
-        self.__storage[user_id] = UserInDB(**new_user_data)
+        user_to_update = self.__get_user(user_id).dict()
+        user_to_update.update(user.dict())
+        self.__storage[user_id] = UserInDB(**user_to_update)
         return self.__storage[user_id]
     
     def delete(self, user_id: UUID) -> None:
-        self._get_user(user_id)
+        self.__get_user(user_id)
         del self.__storage[user_id]
 
-    def _get_user(self, user_id: UUID) -> UserInDB:
-        if user_id not in self.__storage:
-            raise UserDoesNotExist()
-        return self.__storage[user_id]
+    def __create_unique_id(self) -> UUID:
+        return uuid4()
+
+    def __get_user(self, user_id: UUID) -> UserInDB:
+        if user_id in self.__storage:
+            return self.__storage[user_id]
+        raise UserDoesNotExist()
