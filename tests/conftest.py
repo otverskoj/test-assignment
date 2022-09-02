@@ -4,6 +4,7 @@ from uuid import UUID
 import pytest
 import requests
 
+from src.user.models.user import User
 from src.user.models.user_in_db import UserInDB
 from src.user.repositories.impl.in_memory.repository import UserInMemoryRepository
 from src.user.views.models.request import UserRequest
@@ -59,6 +60,25 @@ def not_empty_in_memory_repo(
     repo = UserInMemoryRepository()
     repo._UserInMemoryRepository__storage.update({user.id_: user})
     return repo
+
+
+@pytest.fixture
+def fake_user_to_db() -> User:
+    return User(
+        first_name="Test",
+        last_name="Test",
+        middle_name="Test"
+    )
+
+
+@pytest.fixture
+def fake_user_from_db() -> UserInDB:
+    return UserInDB(
+        id_=UUID('1930eadb-8c5f-488f-8084-3e445042917f'),
+        first_name="Test",
+        last_name="Test",
+        middle_name="Test"
+    )
 
 
 # import pytest
