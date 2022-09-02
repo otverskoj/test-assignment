@@ -30,7 +30,7 @@ services:
 #      - 8000:8000
     depends_on:
       - postgres_db
-    entrypoint: /bin/bash /code/src/entrypoint.sh
+    entrypoint: /bin/bash /code/src/entrypoints/fastapi/entrypoint.sh
 
 volumes:
   postgres-db-volume:
